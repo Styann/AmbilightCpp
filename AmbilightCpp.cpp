@@ -1,9 +1,18 @@
 #include <iostream>
 #include <string>
 #include <windows.h>
+
+//json
+#include <fstream>
+
+//custom class
 #include "ColorRGB.h"
 #include "Screenshot.h"
 
+//xml
+#include "tinyxml2.h"
+
+//opencv
 #include <opencv2/core.hpp>
 #include <opencv2/imgcodecs.hpp>
 #include <opencv2/highgui.hpp>
@@ -12,8 +21,40 @@
 using namespace std;
 using namespace cv;
 
+int scaleFactor = 6;
+int fps = 30;
+bool video = true;
+bool color = false;
 
+int screeny = 0;
+int screenx = 0;
+int width = 1920;
+int height = 1080;
 
+void readJSON() {
+    std::ifstream config("config.json")
+}
+
+void readXML() {
+    tinyxml2::XMLDocument doc;
+    doc.LoadFile("parameters.xml");
+    tinyxml2::XMLElement* root = doc.RootElement();
+
+    root->FirstChildElement("scaleFactor")->QueryIntText(&scaleFactor);
+    root->FirstChildElement("fps")->QueryIntText(&fps);
+
+    tinyxml2::XMLElement* preview = root->FirstChildElement("preview");
+    preview->FirstChildElement("video")->QueryBoolText(&video);
+    preview->FirstChildElement("color")->QueryBoolText(&color);
+
+    tinyxml2::XMLElement* screen = root->FirstChildElement("screen");
+    screen->FirstChildElement("screeny")->QueryIntText(&screeny);
+    screen->FirstChildElement("screenx")->QueryIntText(&screenx);
+    screen->FirstChildElement("width")->QueryIntText(&width);
+    screen->FirstChildElement("height")->QueryIntText(&height);
+
+    cout << screeny;
+}
 
 void extractDominantColor(cv::Mat &frame, ColorRGB* rgb) {
     int r = 0; int g = 0; int b = 0;
@@ -44,12 +85,13 @@ void extractDominantColor(cv::Mat &frame, ColorRGB* rgb) {
 
 int main()
 {
+    readXML();
+
     ColorRGB* rgb = new ColorRGB();
-    Screenshot* screenshot = new Screenshot(0, 0, 1920, 1080);
+    Screenshot* screenshot = new Screenshot(screenx, screeny, width, height);
     
     cv::Mat frame;
     cv::Mat resized;
-    const int fps = 30;
 
     while (true) {
 

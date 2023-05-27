@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<parameters>
+	<scaleFactor>6</scaleFactor>
+	<fps>30</fps>
+
+	<preview>
+		<video>true</video>
+		<color>false</color>
+	</preview>
+	
+
+	<screen>
+		<screeny>0</screeny>
+		<screenx>0</screenx>
+		<width>1920</width>
+		<height>1080</height>
+	</screen>
+
+</parameters>
