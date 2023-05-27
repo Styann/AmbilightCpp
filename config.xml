@@ -1,13 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <parameters>
 	<scaleFactor>6</scaleFactor>
-	<fps>30</fps>
 
-	<preview>
-		<video>true</video>
-		<color>false</color>
-	</preview>
-	
+	<fps>50</fps>
+
+	<preview>true</preview>
 
 	<screen>
 		<screeny>0</screeny>
@@ -15,5 +12,4 @@
 		<width>1920</width>
 		<height>1080</height>
 	</screen>
-
 </parameters>

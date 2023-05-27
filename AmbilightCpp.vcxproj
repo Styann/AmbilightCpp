@@ -132,20 +132,18 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="Ambilight.cpp" />
     <ClCompile Include="AmbilightCpp.cpp" />
     <ClCompile Include="ColorRGB.cpp" />
     <ClCompile Include="Screenshot.cpp" />
     <ClCompile Include="tinyxml2.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="Ambilight.h" />
     <ClInclude Include="ColorRGB.h" />
     <ClInclude Include="Screenshot.h" />
     <ClInclude Include="tinyxml2.h" />
   </ItemGroup>
   <ItemGroup>
-    <Xml Include="parameters.xml" />
+    <Xml Include="config.xml" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

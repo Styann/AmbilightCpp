@@ -42,7 +42,5 @@ public:
         return cv::Scalar(this->b, this->g, this->r, this->opacity);
     }
 
-
-
 };
 
