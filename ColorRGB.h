@@ -13,11 +13,11 @@ private:
     float opacity;
 
 public:
-	ColorRGB() {
-		this->r = 0;
-		this->g = 0;
-		this->b = 0;
-        this->opacity = 1;
+	ColorRGB(unsigned char r = 0, unsigned char g = 0, unsigned char b = 0, float opacity = 1) {
+		this->r = r;
+		this->g = g;
+		this->b = b;
+        this->opacity = opacity;
 	}
 
     void set(unsigned char r, unsigned char g, unsigned char b) {
