@@ -2,7 +2,7 @@
 <parameters>
 	<scaleFactor>6</scaleFactor>
 
-	<fps>50</fps>
+	<fps>30</fps>
 
 	<preview>true</preview>
 

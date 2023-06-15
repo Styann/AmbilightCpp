@@ -90,18 +90,22 @@ int main()
 
 
     if (preview) {
-        while (cv::waitKey(delay) < 0) {
+        for (;;) {
             cv::resize(screenshot->captureScreenMat(), frame, newSize, 0, 0);
             extractDominantColor(frame, rgb);
 
             cv::hconcat(frame, cv::Mat(squareSize, CV_8UC4, rgb->toScalar()), frame);
             cv::imshow("preview", frame);
+
+            if (cv::waitKey(delay) >= 0) break;
         }
     }
     else {
-        while (cv::waitKey(delay) < 0) {
+        for (;;) {
             cv::resize(screenshot->captureScreenMat(), frame, newSize, 0, 0);
             extractDominantColor(frame, rgb);
+
+            if (cv::waitKey(delay) >= 0) break;
         }
     }
 
