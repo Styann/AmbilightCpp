@@ -12,4 +12,9 @@
 		<width>1920</width>
 		<height>1080</height>
 	</screen>
+
+	<serialPort>
+		<name>\\.\COM3</name>
+		<baudRate>9600</baudRate>
+	</serialPort>
 </parameters>

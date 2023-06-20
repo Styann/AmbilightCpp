@@ -133,13 +133,15 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="AmbilightCpp.cpp" />
-    <ClCompile Include="ColorRGB.cpp" />
+    <ClCompile Include="ColorRGBA.cpp" />
     <ClCompile Include="Screenshot.cpp" />
+    <ClCompile Include="SerialPort.cpp" />
     <ClCompile Include="tinyxml2.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="ColorRGB.h" />
+    <ClInclude Include="ColorRGBA.h" />
     <ClInclude Include="Screenshot.h" />
+    <ClInclude Include="SerialPort.h" />
     <ClInclude Include="tinyxml2.h" />
   </ItemGroup>
   <ItemGroup>
