@@ -2,19 +2,11 @@
 <parameters>
 	<scaleFactor>6</scaleFactor>
 
-	<fps>30</fps>
+	<fps>60</fps>
 
 	<preview>true</preview>
 
-	<screen>
-		<screeny>0</screeny>
-		<screenx>0</screenx>
-		<width>1920</width>
-		<height>1080</height>
-	</screen>
+	<screen screeny="0" screenx="0" width="1920" height="1080"></screen>
 
-	<serialPort>
-		<name>\\.\COM3</name>
-		<baudRate>9600</baudRate>
-	</serialPort>
+	<serialPort name="\\.\COM3" baudRate="9600"></serialPort>
 </parameters>

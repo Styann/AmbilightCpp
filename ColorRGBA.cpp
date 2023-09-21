@@ -33,14 +33,14 @@ cv::Scalar ColorRGBA::toScalar() {
     return cv::Scalar(this->b, this->g, this->r, this->a);
 }
 
-void ColorRGBA::extractFromMat(cv::Mat& frame) {
+void ColorRGBA::extractFromMat(cv::Mat* frame) {
     int r = 0; int g = 0; int b = 0;
     int pixelsSum = 0;
     cv::Point3_<uchar>* pixel;
 
-    for (int y = 0; y < frame.rows; y++) {
-        for (int x = 0; x < frame.cols; x++) {
-            pixel = frame.ptr<cv::Point3_<uchar> >(y, x);
+    for (int y = 0; y < frame->rows; y++) {
+        for (int x = 0; x < frame->cols; x++) {
+            pixel = frame->ptr<cv::Point3_<uchar> >(y, x);
 
             if ((pixel->z * 0.2126 + pixel->y * 0.7152 + pixel->x * 0.0722) >= 127) {
                 pixelsSum++;

@@ -19,5 +19,5 @@ public:
     std::string toString();
     char* toJson();
     cv::Scalar toScalar();
-    void extractFromMat(cv::Mat& frame);
+    void extractFromMat(cv::Mat* frame);
 };

@@ -28,7 +28,7 @@ int main()
         ::ShowWindow(::GetConsoleWindow(), SW_HIDE);
     }
 
-    //config params
+    //config parameters
     int scaleFactor = 6;
     int fps = 30;
     bool preview = false;
@@ -38,27 +38,27 @@ int main()
     int width = 1920;
     int height = 1080;
 
+    const char* portName;
 
     //read params from config.xml
     tinyxml2::XMLDocument* doc = new tinyxml2::XMLDocument();
     doc->LoadFile("config.xml");
- 
 
     tinyxml2::XMLElement* root = doc->RootElement();
+
     root->FirstChildElement("scaleFactor")->QueryIntText(&scaleFactor);
+
     root->FirstChildElement("fps")->QueryIntText(&fps);
     root->FirstChildElement("preview")->QueryBoolText(&preview);
 
     tinyxml2::XMLElement* screen = root->FirstChildElement("screen");
-    screen->FirstChildElement("screeny")->QueryIntText(&screeny);
-    screen->FirstChildElement("screenx")->QueryIntText(&screenx);
-    screen->FirstChildElement("width")->QueryIntText(&width);
-    screen->FirstChildElement("height")->QueryIntText(&height);
+    screen->QueryIntAttribute("screeny", &screeny);
+    screen->QueryIntAttribute("screenx", &screenx);
+    screen->QueryIntAttribute("width", &width);
+    screen->QueryIntAttribute("height", &height);
 
-    /*delete doc;
-    doc = nullptr;
-    root = nullptr;
-    screen = nullptr;*/
+    root->FirstChildElement("serialPort")->QueryAttribute("name", &portName);
+    delete doc, root, screen;
 
 
     //apply config
@@ -72,43 +72,23 @@ int main()
     cv::Size squareSize(rheight, rheight);
     cv::Mat frame;
 
-    //serial comm
-    char comPort[] = "\\\\.\\COM3";
-    //const char* configComPort = root->FirstChildElement("serialPort")->Attribute("name");
-
-    /*if (configComPort) {
-        char* temp = strdup(configComPort);
-    }*/
-
-    SerialPort serialport(comPort, CBR_9600);
+    SerialPort *serialport = new SerialPort((char*)&portName, CBR_9600);
 
 
-    if (preview) {
-        for (;;) {
-            cv::resize(screenshot->captureScreenMat(), frame, newSize, 0, 0);
-            rgb->extractFromMat(frame);
+    for (;;) {
+        cv::resize(screenshot->captureScreenMat(), frame, newSize, 0, 0);
+        rgb->extractFromMat(&frame);
 
+        if (preview) {
             cv::hconcat(frame, cv::Mat(squareSize, CV_8UC4, rgb->toScalar()), frame);
             cv::imshow("preview", frame);
-
-            if (serialport.connected_) {
-                serialport.WriteSerialPort(rgb->toJson());      
-            }
-
-            if (cv::waitKey(delay) >= 0) break;
         }
-    }
-    else {
-        for (;;) {
-            cv::resize(screenshot->captureScreenMat(), frame, newSize, 0, 0);
-            rgb->extractFromMat(frame);
 
-            if (serialport.connected_) {
-                serialport.WriteSerialPort(rgb->toJson());
-            }
-
-            if (cv::waitKey(delay) >= 0) break;
+        if (serialport->connected_) {
+            serialport->WriteSerialPort(rgb->toJson());      
         }
+
+        if (cv::waitKey(delay) >= 0) break;
     }
 
     return 0;
