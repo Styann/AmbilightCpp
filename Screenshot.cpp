@@ -9,33 +9,18 @@ Screenshot::Screenshot(int screenx, int screeny, int width, int height) {
 }
 
 
-BITMAPINFOHEADER Screenshot::createBitmapHeader(int width, int height) {
-
-    BITMAPINFOHEADER bi;
-
-    // create a bitmap
-    bi.biSize = sizeof(BITMAPINFOHEADER);
-
-    bi.biWidth = width;
-
-    bi.biHeight = -height;  //this is the line that makes it draw upside down or not
-
-    bi.biPlanes = 1;
-
-    bi.biBitCount = 32;
-
-    bi.biCompression = BI_RGB;
-
-    bi.biSizeImage = 0;
-
-    bi.biXPelsPerMeter = 0;
-
-    bi.biYPelsPerMeter = 0;
-
-    bi.biClrUsed = 0;
-
-    bi.biClrImportant = 0;
-
+BITMAPINFOHEADER Screenshot::createBitmapHeader() {
+    this->bi.biSize = sizeof(BITMAPINFOHEADER);
+    this->bi.biWidth = this->width;
+    this->bi.biHeight = -this->height;  //this is the line that makes it draw upside down or not
+    this->bi.biPlanes = 1;
+    this->bi.biBitCount = 32;
+    this->bi.biCompression = BI_RGB;
+    this->bi.biSizeImage = 0;
+    this->bi.biXPelsPerMeter = 0;
+    this->bi.biYPelsPerMeter = 0;
+    this->bi.biClrUsed = 0;
+    this->bi.biClrImportant = 0;
 
     return bi;
 }
@@ -48,9 +33,9 @@ Mat Screenshot::captureScreenMat()
 
     // get handles to a device context (DC)
 
-    HDC hwindowDC = GetDC(this->hwnd);
+    this->hwindowDC = GetDC(this->hwnd);
 
-    HDC hwindowCompatibleDC = CreateCompatibleDC(hwindowDC);
+    this->hwindowCompatibleDC = CreateCompatibleDC(this->hwindowDC);
 
     SetStretchBltMode(hwindowCompatibleDC, COLORONCOLOR);
 
@@ -70,9 +55,9 @@ Mat Screenshot::captureScreenMat()
 
     // create a bitmap
 
-    HBITMAP hbwindow = CreateCompatibleBitmap(hwindowDC, this->width, this->height);
+    this->hbwindow = CreateCompatibleBitmap(hwindowDC, this->width, this->height);
 
-    BITMAPINFOHEADER bi = createBitmapHeader(this->width, this->height);
+    this->createBitmapHeader();
 
 
     // use the previously created device context with the bitmap
@@ -84,16 +69,16 @@ Mat Screenshot::captureScreenMat()
 
     StretchBlt(hwindowCompatibleDC, 0, 0, this->width, this->height, hwindowDC, this->screenx, this->screeny, this->width, this->height, SRCCOPY);
 
-    GetDIBits(hwindowCompatibleDC, hbwindow, 0, this->height, src.data, (BITMAPINFO*)&bi, DIB_RGB_COLORS); //copy from hwindowCompatibleDC to hbwindow
+    GetDIBits(hwindowCompatibleDC, hbwindow, 0, this->height, src.data, (BITMAPINFO*)&this->bi, DIB_RGB_COLORS); //copy from hwindowCompatibleDC to hbwindow
 
 
     // avoid memory leak
 
-    DeleteObject(hbwindow);
+    /*DeleteObject(hbwindow);
 
     DeleteDC(hwindowCompatibleDC);
 
-    ReleaseDC(this->hwnd, hwindowDC);
+    ReleaseDC(this->hwnd, hwindowDC);*/
 
 
     return src;

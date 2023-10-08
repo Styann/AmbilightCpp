@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <parameters>
-	<scaleFactor>6</scaleFactor>
+	<scaleFactor>12</scaleFactor>
 
-	<fps>60</fps>
+	<fps>6</fps>
 
 	<preview>true</preview>
 

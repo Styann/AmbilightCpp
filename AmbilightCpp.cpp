@@ -2,6 +2,9 @@
 #include <string>
 #include <windows.h>
 
+#include <chrono>
+#include <thread>
+
 //custom class
 #include "ColorRGBA.h"
 #include "Screenshot.h"
@@ -19,6 +22,8 @@
 #include <opencv2/imgproc.hpp>
 
 using namespace std;
+using namespace std::this_thread;
+using namespace std::chrono;
 
 
 int main()
@@ -88,7 +93,7 @@ int main()
             serialport->WriteSerialPort(rgb->toJson());      
         }
 
-        if (cv::waitKey(delay) >= 0) break;
+        cv::waitKey(delay);
     }
 
     return 0;

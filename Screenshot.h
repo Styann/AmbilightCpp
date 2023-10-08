@@ -11,12 +11,17 @@ private:
     int screeny;
     int width;
     int height;
+
     HWND hwnd;
+    HDC hwindowDC;
+    HDC hwindowCompatibleDC;
+    BITMAPINFOHEADER bi;
+    HBITMAP hbwindow;
 
 public:
     Screenshot(int screenx, int screeny, int width, int height);
 
-    BITMAPINFOHEADER createBitmapHeader(int width, int height);
+    BITMAPINFOHEADER createBitmapHeader();
 
     Mat captureScreenMat();
 };
