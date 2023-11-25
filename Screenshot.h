@@ -18,10 +18,12 @@ private:
     BITMAPINFOHEADER bi;
     HBITMAP hbwindow;
 
+    Mat src;
+
 public:
     Screenshot(int screenx, int screeny, int width, int height);
 
-    BITMAPINFOHEADER createBitmapHeader();
+    ~Screenshot(void);
 
-    Mat captureScreenMat();
+    Mat captureScreenMat(void);
 };

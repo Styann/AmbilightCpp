@@ -13,33 +13,33 @@ void ColorRGBA::set(unsigned char r, unsigned char g, unsigned char b) {
     this->b = b;
 }
 
-void ColorRGBA::reset() {
+void ColorRGBA::reset(void) {
     this->set(0, 0, 0);
 }
 
-std::string ColorRGBA::toString() {
+std::string ColorRGBA::toString(void) {
     char buffer[100];
     snprintf(buffer, sizeof(buffer), "r:%d g:%d b:%d ", this->r, this->g, this->b);
     return buffer;
 }
 
-char* ColorRGBA::toJson() {
+char* ColorRGBA::toJson(void) {
     char buffer[100];
     snprintf(buffer, sizeof(buffer), "{ \"ColorRGB\":[%d, %d, %d] }", this->r, this->g, this->b);
     return buffer;
 }
 
-cv::Scalar ColorRGBA::toScalar() {
+cv::Scalar ColorRGBA::toScalar(void) {
     return cv::Scalar(this->b, this->g, this->r, this->a);
 }
 
 void ColorRGBA::extractFromMat(cv::Mat* frame) {
     int r = 0; int g = 0; int b = 0;
     int pixelsSum = 0;
-    cv::Point3_<uchar>* pixel;
+    cv::Point3_<uchar> *pixel;
 
-    for (int y = 0; y < frame->rows; y++) {
-        for (int x = 0; x < frame->cols; x++) {
+    for (int y = 0; y < frame->rows; y += 20) {
+        for (int x = 0; x < frame->cols; x += 20) {
             pixel = frame->ptr<cv::Point3_<uchar> >(y, x);
 
             if ((pixel->z * 0.2126 + pixel->y * 0.7152 + pixel->x * 0.0722) >= 127) {

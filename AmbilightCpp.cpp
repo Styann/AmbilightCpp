@@ -1,9 +1,5 @@
 #include <iostream>
-#include <string>
 #include <windows.h>
-
-#include <chrono>
-#include <thread>
 
 //custom class
 #include "ColorRGBA.h"
@@ -22,9 +18,6 @@
 #include <opencv2/imgproc.hpp>
 
 using namespace std;
-using namespace std::this_thread;
-using namespace std::chrono;
-
 
 int main()
 {
@@ -34,8 +27,7 @@ int main()
     }
 
     //config parameters
-    int scaleFactor = 6;
-    int fps = 30;
+    int fps = 24;
     bool preview = false;
 
     int screeny = 0;
@@ -50,8 +42,6 @@ int main()
     doc->LoadFile("config.xml");
 
     tinyxml2::XMLElement* root = doc->RootElement();
-
-    root->FirstChildElement("scaleFactor")->QueryIntText(&scaleFactor);
 
     root->FirstChildElement("fps")->QueryIntText(&fps);
     root->FirstChildElement("preview")->QueryBoolText(&preview);
@@ -72,21 +62,18 @@ int main()
     
     int delay = 1000 / fps;
 
-    int rheight = height / scaleFactor;
-    cv::Size newSize(width / scaleFactor, rheight);
-    cv::Size squareSize(rheight, rheight);
+    cv::Size squareSize(300, 300);
     cv::Mat frame;
 
     SerialPort *serialport = new SerialPort((char*)&portName, CBR_9600);
 
 
-    for (;;) {
-        cv::resize(screenshot->captureScreenMat(), frame, newSize, 0, 0);
+    for(;;) {
+        frame = screenshot->captureScreenMat();
         rgb->extractFromMat(&frame);
 
         if (preview) {
-            cv::hconcat(frame, cv::Mat(squareSize, CV_8UC4, rgb->toScalar()), frame);
-            cv::imshow("preview", frame);
+            cv::imshow("preview", cv::Mat(squareSize, CV_8UC4, rgb->toScalar()));
         }
 
         if (serialport->connected_) {
@@ -95,6 +82,6 @@ int main()
 
         cv::waitKey(delay);
     }
-
+    
     return 0;
 }
