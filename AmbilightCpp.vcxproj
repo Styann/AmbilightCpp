@@ -136,12 +136,14 @@
     <ClCompile Include="ColorRGBA.cpp" />
     <ClCompile Include="Screenshot.cpp" />
     <ClCompile Include="SerialPort.cpp" />
+    <ClCompile Include="SimpleSerial.cpp" />
     <ClCompile Include="tinyxml2.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="ColorRGBA.h" />
     <ClInclude Include="Screenshot.h" />
     <ClInclude Include="SerialPort.h" />
+    <ClInclude Include="SimpleSerial.h" />
     <ClInclude Include="tinyxml2.h" />
   </ItemGroup>
   <ItemGroup>

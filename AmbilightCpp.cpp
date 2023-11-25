@@ -9,7 +9,7 @@
 #include "tinyxml2.h"
 
 //serial comm
-#include "SerialPort.h"
+#include "SimpleSerial.h"
 
 //opencv
 #include <opencv2/core.hpp>
@@ -65,7 +65,7 @@ int main()
     cv::Size squareSize(300, 300);
     cv::Mat frame;
 
-    SerialPort *serialport = new SerialPort((char*)&portName, CBR_9600);
+    SimpleSerial *serialport = new SimpleSerial((char*)&portName, CBR_9600);
 
 
     for(;;) {
